@@ -1,23 +1,28 @@
 {
   "name": "Next.js & Python Full-Stack Codespace",
-  // CHANGED: Use the universal image for both Node.js and Python support
   "image": "mcr.microsoft.com/devcontainers/universal:latest",
   
-  // This command installs Next.js dependencies and clones the submodules
-  "postStartCommand": "npm install && git submodule update --init --recursive",
+  // Explicitly make the Codespace token available as a standard environment variable
+  "containerEnv": {
+    "GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN}"
+  },
+
+  // 1. Run npm install
+  // 2. Initialize submodules (which sets up .git/config)
+  // 3. Update/pull the contents of the submodules using the new token
+  "postStartCommand": "npm install && git submodule init && git submodule update",
   
-  "forwardPorts": [3000, 5000, 5050, 6380],
+  "forwardPorts": [3000, 5000, 5050, 6380], 
   "portsAttributes": {
     "3000": { "label": "Next.js Frontend", "onAutoForward": "openBrowser" },
     "5000": { "label": "Primary Python API" },
     "5050": { "label": "Secondary Python Service" },
     "6380": { "label": "Redis Cache (Custom Port)", "onAutoForward": "notify" }
-  }, // <--- THIS COMMA WAS MISSING!
+  }, 
   
   "customizations": {
     "codespaces": {
       "repositories": {
-        // REQUIRED FOR PRIVATE SUBMODULES: Read/Write Permission
         "ephem24/ai-tutor-module": {
           "permissions": {
             "contents": "write" 
