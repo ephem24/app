@@ -2,13 +2,16 @@
   "name": "Next.js & Python Full-Stack Codespace",
   "image": "mcr.microsoft.com/devcontainers/universal:latest",
   
-  // Make the GitHub token available in the container environment
   "containerEnv": {
+    // This is crucial: make sure the GITHUB_TOKEN is available
     "GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN}"
   },
 
-  // Use postCreateCommand for earlier setup: install dependencies and fetch submodules
-  "postCreateCommand": "npm install && git submodule init && git submodule update", 
+  // NEW COMMAND: 
+  // 1. Install dependencies
+  // 2. Configure Git globally to use the GITHUB_TOKEN for ALL HTTPS traffic to GitHub
+  // 3. Execute the submodule update (which now has valid credentials)
+  "postCreateCommand": "npm install && git config --global url.\"https://x-access-token:${GITHUB_TOKEN}@github.com\".insteadOf \"https://github.com\" && git submodule init && git submodule update", 
   
   "forwardPorts": [3000, 5000, 5050, 6380], 
   "portsAttributes": {
