@@ -1,0 +1,6 @@
+[submodule "ai-tutor-module"]
+	path = ai-tutor-module
+	url = https://github.com/ephem24/ai-tutor-module.git
+[submodule "app-prototype"]
+	path = app-prototype
+	url = https://github.com/ephem24/app-prototype.git

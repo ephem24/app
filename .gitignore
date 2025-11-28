@@ -1,0 +1,45 @@
+# General
+.DS_Store
+.env
+.env.local
+.venv/
+env/
+venv/
+*.pyc
+__pycache__/
+*.log
+
+# Python Specific
+*.py[co]
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.rst
+
+# Next.js Specific (for frontend/)
+frontend/.next/
+frontend/out/
+frontend/node_modules/
+frontend/npm-debug.log
+frontend/.next/cache/
+frontend/build/
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.bak
+*~
