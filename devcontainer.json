@@ -1,0 +1,34 @@
+{
+  "name": "Next.js & Python Full-Stack Codespace",
+  // CHANGED: Use the universal image for both Node.js and Python support
+  "image": "mcr.microsoft.com/devcontainers/universal:latest",
+  
+  // This command installs Next.js dependencies and clones the submodules
+  "postCreateCommand": "npm install && git submodule update --init --recursive",
+  
+  "forwardPorts": [3000, 5000, 5050, 6380], // Assuming your Python backend runs on port 5000
+  "portsAttributes": {
+    "3000": { "label": "Next.js Frontend", "onAutoForward": "openBrowser" },
+    "5000": { "label": "Primary Python API" },
+    "5050": { "label": "Secondary Python Service" },
+    "6380": { "label": "Redis Cache (Custom Port)", "onAutoForward": "notify" }
+  }
+  
+  "customizations": {
+    "codespaces": {
+      "repositories": {
+        // REQUIRED FOR PRIVATE SUBMODULES: Read/Write Permission
+        "ephem24/ai-tutor-module": {
+          "permissions": {
+            "contents": "write" 
+          }
+        },
+        "ephem24/app-prototype": {
+          "permissions": {
+            "contents": "write"
+          }
+        }
+      }
+    }
+  }
+}
