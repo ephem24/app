@@ -2,15 +2,13 @@
   "name": "Next.js & Python Full-Stack Codespace",
   "image": "mcr.microsoft.com/devcontainers/universal:latest",
   
-  // Explicitly make the Codespace token available as a standard environment variable
+  // Make the GitHub token available in the container environment
   "containerEnv": {
     "GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN}"
   },
 
-  // 1. Run npm install
-  // 2. Initialize submodules (which sets up .git/config)
-  // 3. Update/pull the contents of the submodules using the new token
-  "postStartCommand": "npm install && git submodule init && git submodule update",
+  // Use postCreateCommand for earlier setup: install dependencies and fetch submodules
+  "postCreateCommand": "npm install && git submodule init && git submodule update", 
   
   "forwardPorts": [3000, 5000, 5050, 6380], 
   "portsAttributes": {
@@ -21,6 +19,12 @@
   }, 
   
   "customizations": {
+    "vscode": {
+      "settings": {
+        // Crucial setting to ensure Git uses the credential manager (GitHub token)
+        "git.credentialHelper": "manager" 
+      }
+    },
     "codespaces": {
       "repositories": {
         "ephem24/ai-tutor-module": {
