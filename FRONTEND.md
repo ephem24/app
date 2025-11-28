@@ -10,13 +10,35 @@ To maintain modularity while enabling streamlined development and sharing of typ
 
 ```
 /home/ephem/workspace/app/
-├── ai-tutor-module/  # Existing Python backend service (AI core)
-├── app-prototype/    # Existing Python backend service (Google Meet integration, Transcription, Orchestration)
+├── ai-tutor-module/  # Git Submodule: Python backend service (AI core)
+├── app-prototype/    # Git Submodule: Python backend service (Google Meet integration, Transcription, Orchestration)
 ├── frontend/         # New Next.js application
 └── ...
 ```
 
 This approach allows each service to be developed and deployed independently if needed, while benefiting from centralized tooling and clearer project overview.
+
+### Git Submodule Integration
+
+The `ai-tutor-module` and `app-prototype` are integrated into this monorepo as **Git Submodules**. This allows them to retain their independent Git histories and remote origins, enabling separate development and versioning while being managed under a single parent repository.
+
+**Implications for Local Development:**
+
+When cloning this monorepo for the first time, or after pulling updates that involve submodule changes, you must initialize and update the submodules.
+
+To clone the monorepo and all its submodules:
+```bash
+git clone --recurse-submodules <YOUR_MONOREPO_URL>
+```
+
+If you have already cloned the monorepo without `--recurse-submodules`, or if new submodules are added/updated, you can initialize and update them manually:
+```bash
+git submodule update --init --recursive
+```
+
+**Authentication for Private Submodules:**
+Since the submodules might be private repositories, Git will require authentication (e.g., a Personal Access Token or SSH keys) when attempting to clone or update them.
+
 
 ### How Backend Repos Will Be Used with the Frontend:
 
@@ -125,7 +147,7 @@ frontend/
 
 *   **`frontend/README.md`**:
     *   **Purpose:** The main entry point for understanding the frontend project.
-    *   **Content:** Project overview, setup instructions, development scripts, deployment guides, key architectural decisions, and links to other important documentation (like this `FRONTEND.md`).
+    *   **Content:** Project overview, setup instructions (including monorepo submodule management), development scripts, deployment guides, key architectural decisions, and links to other important documentation (like this `FRONTEND.md`).
 *   **`frontend/src/README.md`**:
     *   **Purpose:** Explains the overall structure and philosophy of the `src` directory.
     *   **Content:** A high-level overview of each top-level directory within `src` (`app`, `components`, `hooks`, `lib`, `services`, `styles`, `types`), describing their responsibilities and how they contribute to modularity.
