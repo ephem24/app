@@ -12,7 +12,7 @@
 
   // ✅ THE FIX: This runs in your visible terminal AFTER you connect.
   // Since manual typing works, this will work.
-  "postAttachCommand": "git submodule update --init --recursive",
+  "postAttachCommand": "git submodule update --init --recursive --depth 1",
   
   "customizations": {
     "codespaces": {
