@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:latest
+    ports:
+      - "6380:6379" # Map host port 6380 to container port 6379 (Redis default)
+    # The command 'redis-server --port 6379' is the default and can be omitted.
+    # Other services within the Docker network will connect to 'redis:6379'.
+
+  ai-tutor:
+    build:
+      context: ./ai-tutor-module
+      dockerfile: Dockerfile
+    ports:
+      - "5050:5050"
+    environment:
+      GEMINI_API_KEY: ${GEMINI_API_KEY} # Expect GEMINI_API_KEY from host env
+      REDIS_PORT: 6379 # AI-Tutor will connect to Redis container on its internal port
+      REDIS_HOST: redis # Redis service name in Docker network
+    depends_on:
+      - redis
+
+  app-prototype:
+    build:
+      context: ./app-prototype
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      AI_TUTOR_HOST: ai-tutor # AI-Tutor service name in Docker network
+      AI_TUTOR_PORT: 5050
+      # Other settings like MEET_TIMEOUT_SECONDS, etc., can be pulled from a .env file later
+    depends_on:
+      - ai-tutor
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_APP_PROTOTYPE_URL: http://app-prototype:5000 # App Prototype service name in Docker network
+      # If running in Codespaces, this might need to be the public URL for app-prototype later
+    depends_on:
+      - app-prototype

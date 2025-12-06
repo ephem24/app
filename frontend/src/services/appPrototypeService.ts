@@ -10,13 +10,13 @@ const apiClient = axios.create({
 });
 
 export interface StartSessionPayload {
-  meetUrl: string;
+  meet_url: string;
   topic: string;
-  gradeLevel: string;
+  grade_level: string;
 }
 
 export interface StartSessionResponse {
-  sessionId: string;
+  session_id: string;
   message: string;
 }
 
@@ -27,19 +27,8 @@ export interface StartSessionResponse {
  */
 export const startSession = async (payload: StartSessionPayload): Promise<StartSessionResponse> => {
   try {
-    // In a real application, you would make an API call:
-    // const response = await apiClient.post('/session/start', payload);
-    // return response.data;
-
-    // For now, we'll simulate the API call and return mock data.
-    console.log('Starting session with payload:', payload);
-    const mockSessionId = `session_${Date.now()}`;
-    await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate network delay
-    
-    return {
-      sessionId: mockSessionId,
-      message: 'Session started successfully.',
-    };
+    const response = await apiClient.post('/session/start', payload);
+    return response.data;
   } catch (error) {
     console.error('Failed to start session:', error);
     throw new Error('Failed to start session. Please try again.');
