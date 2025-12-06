@@ -43,3 +43,5 @@ frontend/build/
 *.swp
 *.bak
 *~
+avenv/
+dump.rdb
